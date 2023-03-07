@@ -8,7 +8,7 @@ def index(request):
 
 def view_seller(request):
     seller = Seller.objects.filter(status = 'approved')
-    return render(request,'admin_templates/view_seller.html')
+    return render(request,'admin_templates/view_seller.html',{'seller':seller})
 
 def approve_seller(request):
     seller = Seller.objects.filter(status = 'pending')
