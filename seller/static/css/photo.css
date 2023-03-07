@@ -1,0 +1,29 @@
+/* .img-thumb {
+    max-height: 200px;
+    width: 170px !important;
+    border: 2px solid none;
+    border-radius:3px;
+    cursor: pointer;
+  }
+  .img-thumb-wrapper {
+    max-height: 230px;
+    max-width: 175px !important;
+    display: inline-block;
+    margin: 10px 10px;
+    display: flex;
+    justify-content: center;
+  }
+  .remove {
+    display: block;
+    background: #000000;
+    border: 1px solid none;
+    border-radius: 6px;
+    color: white;
+    text-align: center;
+    cursor: pointer;
+    margin: 3px 3px;
+  }
+  .remove:hover {
+    background: white;
+    color: black;
+  } */

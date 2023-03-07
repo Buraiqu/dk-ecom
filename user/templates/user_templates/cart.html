@@ -1,0 +1,405 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static '/css/style1.css' %}" as="style">
+    <link rel="stylesheet" href="{% static 'css/cart.scss' %}">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,700,0,200" />
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,700,1,200" />
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,700,1,200" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://kit.fontawesome.com/99c47b3908.js" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+        integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js"
+        integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V"
+        crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+        crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" type="text/css"
+        href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+    <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'images/favicon11.png' %}">
+    <link rel="apple-touch-icon" href="{% static 'images/favicon11.png' %}">
+    <link rel="apple-touch-icon" sizes="72x72" href="{% static 'images/favicon11.png' %}">
+    <link rel="apple-touch-icon" sizes="114x114" href="{% static 'images/favicon11.png' %}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'images/favicon11.png' %}">
+    <link rel="apple-touch-icon" sizes="228x228" href="{% static 'images/favicon11.png' %}">
+    <title>DarkWear</title>
+</head>
+
+<body>
+
+    <!-----------------------------------------------------navbar---------------------------------------------------------->
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-white p-3">
+        <div class="container-fluid bg">
+            <a class="navbar-brand logo1" href="#">DarkWear</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+                aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class=" collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav ms-auto ">
+                    <li class="nav-item">
+                        <a class="nav-link mx-2 active" aria-current="page" href="{% url 'user:home' %}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link mx-2" href="#">Sales</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link mx-2" href="{% url 'user:jacket' %}">Jackets</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link mx-2" href="{% url 'user:hoodie' %}">Hoodies</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link mx-2" href="{% url 'user:sweater' %}">Sweaters</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link mx-2" href="{% url 'user:t-shirt' %}">T-Shirts</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link mx-2" href="{% url 'user:pants' %}">Pants</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link mx-2" href="{% url 'user:hats' %}">Hats</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link mx-2" href="{% url 'user:accessories' %}">Accessories</a>
+                    </li>
+                </ul>
+
+                <ul class="navbar-nav ms-auto d-none d-lg-inline-flex">
+                    <li class="nav-item mx-1">
+                        <a class="nav-link text-dark h5" href="" target="blank">
+                            <span class="material-symbols-outlined">search</span>
+                        </a>
+                    </li>
+                    <li class="nav-item mx-1 dropdown">
+                        <a class="nav-link text-dark h5 dropdown-toggle" href="#" role="button"
+                            data-bs-toggle="dropdown">
+                            <span class="material-symbols-outlined">
+                                person
+                            </span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">Profile</a></li>
+                            <li><a class="dropdown-item" href="#">Orders</a></li>
+                            <li><a class="dropdown-item" href="#">Log Out</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item mx-1">
+                        <a class="nav-link text-dark h5" href="{% url 'user:cart' %}" target="blank">
+                            <span class="material-symbols-outlined">
+                                shopping_cart
+                            </span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-----------------------------------------------------navbar---------------------------------------------------------->
+
+    <!-----------------------------------------------------cart details-------------------------------------------------->
+    <div class="container my-5 ">
+        <h1 class="px-5" style="color:rgb(182, 49, 49) ;">Shopping Cart</h1>
+
+        <div class="shopping-cart pt-3 table-responsive">
+
+            <table class="table table-striped">
+                <tbody>
+                    <tr class="product">
+                        <td scope="col" class="product-image">
+                            <img class="img-fluid" height="130px" width="200px" src="{% static 'images/gymbag1.jpg' %}">
+                        </td>
+                        <td scope="col" class="product-details">
+                            <div class="product-title">Dingo Dog Bones</div>
+                            <p class="product-description">The best dog bones of all time.</p>
+                        </td>
+                        <td scope="col" class="product-price">12.99</td>
+                        <td scope="col" class="product-quantity fluid">
+                            <input type="number" value="2" min="1">
+                        </td>
+                        <td scope="col" class="product-removal">
+                            <a class="btn btn-danger remove-product">
+                                Remove
+                            </a>
+                        </td>
+                        <td scope="col" class="product-line-price">25.98</td>
+                    </tr>
+                    <tr class="product">
+                        <td class="col product-image">
+                            <img class="img-fluid" height="130px" width="200px" src="{% static 'images/gymbag1.jpg' %}">
+                        </td>
+                        <td class="col product-details">
+                            <div class="product-title">Nutro™ Adult Lamb and Rice Dog Food</div>
+                            <p class="product-description">Who doesn't like lamb and rice? 
+                            </p>
+                        </td>
+                        <td class="col product-price">45.99</td>
+                        <td class="col product-quantity fluid">
+                            <input type="number" value="1" min="1">
+                        </td>
+                        <td class="col product-removal">
+                            <a class="btn btn-danger remove-product">
+                                Remove
+                            </a>
+                        </td>
+                        <td class="col product-line-price">45.99</td>
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+
+            <div class="totals">
+                <div class="totals-item">
+                    <label>Subtotal</label>
+                    <div class="totals-value" id="cart-subtotal">71.97</div>
+                </div>
+                <div class="totals-item">
+                    <label>Tax (5%)</label>
+                    <div class="totals-value" id="cart-tax">3.60</div>
+                </div>
+                <div class="totals-item">
+                    <label>Shipping</label>
+                    <div class="totals-value" id="cart-shipping">15.00</div>
+                </div>
+                <div class="totals-item totals-item-total">
+                    <label style="color:rgb(182, 49, 49) ; font-size: 32px; font-weight: bold; ">Grand Total :</label>
+                    <div class="totals-value" id="cart-total">90.57</div>
+                </div>
+            </div>
+
+            <button class="checkout">Checkout</button>
+
+        </div>
+    </div>
+    <!-----------------------------------------------------cart details-------------------------------------------------->
+    <script>
+        var taxRate = 0.05;
+        var shippingRate = 15.00;
+        var fadeTime = 300;
+
+
+        /* Assign actions */
+        $('.product-quantity input').change(function () {
+            updateQuantity(this);
+        });
+
+        $('.product-removal button').click(function () {
+            removeItem(this);
+        });
+
+
+        /* Recalculate cart */
+        function recalculateCart() {
+            var subtotal = 0;
+
+            /* Sum up row totals */
+            $('.product').each(function () {
+                subtotal += parseFloat($(this).children('.product-line-price').text());
+            });
+
+            /* Calculate totals */
+            var tax = subtotal * taxRate;
+            var shipping = (subtotal > 0 ? shippingRate : 0);
+            var total = subtotal + tax + shipping;
+
+            /* Update totals display */
+            $('.totals-value').fadeOut(fadeTime, function () {
+                $('#cart-subtotal').html(subtotal.toFixed(2));
+                $('#cart-tax').html(tax.toFixed(2));
+                $('#cart-shipping').html(shipping.toFixed(2));
+                $('#cart-total').html(total.toFixed(2));
+                if (total == 0) {
+                    $('.checkout').fadeOut(fadeTime);
+                } else {
+                    $('.checkout').fadeIn(fadeTime);
+                }
+                $('.totals-value').fadeIn(fadeTime);
+            });
+        }
+
+
+        /* Update quantity */
+        function updateQuantity(quantityInput) {
+            /* Calculate line price */
+            var productRow = $(quantityInput).parent().parent();
+            var price = parseFloat(productRow.children('.product-price').text());
+            var quantity = $(quantityInput).val();
+            var linePrice = price * quantity;
+
+            /* Update line price display and recalc cart totals */
+            productRow.children('.product-line-price').each(function () {
+                $(this).fadeOut(fadeTime, function () {
+                    $(this).text(linePrice.toFixed(2));
+                    recalculateCart();
+                    $(this).fadeIn(fadeTime);
+                });
+            });
+        }
+
+
+        /* Remove item from cart */
+        function removeItem(removeButton) {
+            /* Remove row from DOM and recalc cart total */
+            var productRow = $(removeButton).parent().parent();
+            productRow.slideUp(fadeTime, function () {
+                productRow.remove();
+                recalculateCart();
+            });
+        }
+    </script>
+    <!------------------------------------------------------footer----------------------------------------------------->
+
+
+    <!-- Remove the container if you want to extend the Footer to full width. -->
+    <div class="container-fluid" style="background-color: black;">
+        <!-- Footer -->
+        <footer class="text-center text-lg-start text-white" style="background-color: #0000; z-index: 35;">
+            <!-- Grid container -->
+            <div class="container p-4 pb-0">
+                <!-- Section: Links -->
+                <section class="">
+                    <!--Grid row-->
+                    <div class="row">
+                        <!-- Grid column -->
+                        <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
+                            <h3 class="mb-4 font-weight-bold" style="font-family: impact;">
+                                <i>DarkWear</i>
+                            </h3>
+                            <p>
+                                We believe that wearing clothing that fits<br>
+                                your inner expression empowers you.
+                            </p>
+                        </div>
+                        <!-- Grid column -->
+
+                        <hr class="w-100 clearfix d-md-none" />
+
+                        <!-- Grid column -->
+                        <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mt-3">
+                            <h6 class="text-uppercase mb-4 font-weight-bold">Communities</h6>
+                            <p>
+                                <a class="text-white" style="text-decoration: none;">Techwear</a>
+                            </p>
+                            <p>
+                                <a class="text-white" style="text-decoration: none;">NikeTech</a>
+                            </p>
+                            <p>
+                                <a href="" class="text-white" style="text-decoration: none;">StreetWear</a>
+                            </p>
+                        </div>
+                        <!-- Grid column -->
+
+                        <hr class="w-100 clearfix d-md-none" />
+
+                        <!-- Grid column -->
+                        <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mt-3">
+                            <h6 class="text-uppercase mb-4 font-weight-bold">
+                                Useful links
+                            </h6>
+                            <p>
+                                <a class="text-white" style="text-decoration: none;">Your Account</a>
+                            </p>
+                            <p>
+                                <a class="text-white" style="text-decoration: none;">your Orders</a>
+                            </p>
+                            <p>
+                                <a class="text-white" style="text-decoration: none;">Track Order</a>
+                            </p>
+                            <p>
+                                <a class="text-white" style="text-decoration: none;">Help</a>
+                            </p>
+                        </div>
+
+                        <!-- Grid column -->
+                        <hr class="w-100 clearfix d-md-none" />
+
+                        <!-- Grid column -->
+                        <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mt-3">
+                            <h6 class="text-uppercase mb-4 font-weight-bold">Contact</h6>
+                            <p><i class="fas fa-home mr-3"></i> New York, NY 10012, US</p>
+                            <p><i class="fas fa-envelope mr-3"></i> info@gmail.com</p>
+                            <p><i class="fas fa-phone mr-3"></i> + 01 234 567 88</p>
+                            <p><i class="fas fa-print mr-3"></i> + 01 234 567 89</p>
+                        </div>
+                        <!-- Grid column -->
+                    </div>
+                    <!--Grid row-->
+                </section>
+                <!-- Section: Links -->
+
+                <hr class="my-3">
+
+                <!-- Section: Copyright -->
+                <section class="p-3 pt-0">
+                    <div class="row d-flex align-items-center">
+                        <!-- Grid column -->
+                        <div class="col-md-7 col-lg-8 text-center text-md-start">
+                            <!-- Copyright -->
+                            <div class="p-3">
+                                © 2022 Copyright:
+                                <a class="text-white" style="text-decoration: none;" href="#">darkwear.com</a>
+                            </div>
+                            <!-- Copyright -->
+                        </div>
+                        <!-- Grid column -->
+
+                        <!-- Grid column -->
+                        <div class="col-md-5 col-lg-4 ml-lg-0 text-center text-md-end">
+                            <!-- Facebook -->
+                            <a class="btn btn-outline-light btn-floating m-1" class="text-white" role="button"><i
+                                    class="fab fa-facebook-f"></i></a>
+
+                            <!-- Twitter -->
+                            <a class="btn btn-outline-light btn-floating m-1" class="text-white" role="button"><i
+                                    class="fab fa-twitter"></i></a>
+
+                            <!-- Google -->
+                            <a class="btn btn-outline-light btn-floating m-1" class="text-white" role="button"><i
+                                    class="fab fa-google"></i></a>
+
+                            <!-- Instagram -->
+                            <a class="btn btn-outline-light btn-floating m-1" class="text-white" role="button"><i
+                                    class="fab fa-instagram"></i></a>
+                        </div>
+                        <!-- Grid column -->
+                    </div>
+                </section>
+                <!-- Section: Copyright -->
+            </div>
+            <!-- Grid container -->
+        </footer>
+        <!-- Footer -->
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,88 @@
+{% extends 'seller_templates/index.html' %}
+{% load static %}
+
+{% block content %}
+<link href="{% static 'css/sb-admin-2.css' %}" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+    
+
+
+    <script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
+
+    
+
+
+
+                    <!-- Page Heading -->
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                        <h1 class="h3 mb-0 text-gray-800">Welcome Seller</h1>
+                    </div>
+
+
+                    <h2>Add Variant</h2>
+
+                    <div class="container">
+                        <form method="POST" enctype="multipart/form-data" role="form" id="frm_scents">
+                            {% csrf_token %}
+                            <div class="row" id="p_scents">
+                                <div class="form-group p-2">
+                                    <select class="form-control tx-md product-select" id="Field_Type" name="product_id" data-url="{% url 'seller:product_list' %}">
+                                        <option value="" selected disabled>---select the product---</option>
+                                        {% for product in products %}
+                                        <option value="{{product.id}}">{{product.product_name}}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <a href="#" id="addScnt" class="btn btn-success" style="width: 150px; height: 50px;">Add Variant</a> 
+                                <div class="px-2">
+                                <button class="btn btn-primary" style="width: 150px; height: 50px;">submit</button></div> 
+                            </div>
+                            
+                            
+                        </form>
+                    </div>
+
+    <script>
+        var scntDiv = $("#frm_scents");
+        var i = $("#p_scents").length + 1;
+
+        $(function () {
+            $("#addScnt").click(function () {
+                // Create a new row
+                var row = $(
+                    '<div class="row" id="p_scents"><div class="form-group p-2">'+
+                    '<input type="number" class="form-control tx-sm" id="Fld_Name" name="quantity[]" placeholder="quantity" /></div>' +
+                    '<div class="form-group p-2">' +
+                    '<select class="form-control tx-md size-select" id="Field_Type" name="size_id[]">' +
+                    '<option value="" selected disabled>---select size---</option>' +
+                    '{% for size in sizes %}<option value="{{size.id}}">{{size.size}}</option>{% endfor %}' +
+                    '</select></div>' +
+                    '<a href="#" id="remScnt" class="btn btn-danger" style="width:150px; height:50px" onclick="removeCont(this);">Remove</a></div>'
+                );
+     
+                //Add the row to the form
+                row.appendTo(scntDiv);
+                i++;
+                return false;
+            });
+        });
+
+        function removeCont(_this) {
+            if (i > 1) {
+                $(_this).parent().remove();
+                i--;
+            }
+        }
+    </script>
+   
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+
+
+{% endblock %}
