@@ -1,9 +1,12 @@
+from django.http import JsonResponse
 from django.shortcuts import render,redirect
 from .models import Category,Fit,Material,Pattern,Neck,Sleeve,Size,Variant,Products,Album
 from home.models import Seller
 import pprint
 import os
 from django.contrib import messages
+
+
 
 
 # Create your views here.
@@ -58,28 +61,41 @@ def seller_home(request):
     sleeve = Sleeve.objects.all()
     pattern = Pattern.objects.all()
     
-    
     if request.method == 'POST':
         p_name = request.POST['productname']
         p_description = request.POST['description']
         p_category = Category.objects.get(id = request.POST['category'])
         p_price = request.POST['price']
         p_image = request.FILES['pic']
+        p_album = request.FILES.getlist('files[]')
         seller = Seller.objects.get(id = request.session['seller'])
         p_material = Material.objects.get(id = request.POST['material'])
-        p_fit = Fit.objects.get(id = request.POST['fittype'])
-        p_sleeve = Sleeve.objects.get(id = request.POST['sleeve'])
-        p_neck = Neck.objects.get(id = request.POST['neck'])
-        p_pattern = Pattern.objects.get(id = request.POST['pattern'])
-        p_album = request.FILES.getlist('files[]')
-        
-
+        if p_category.category_name in ["t-shirt", "jacket", "sweatshirt", "hoodie"]:
+            p_fit = Fit.objects.get(id = request.POST['fittype'])
+            p_sleeve = Sleeve.objects.get(id = request.POST['sleeve',''])
+            p_neck = Neck.objects.get(id = request.POST['neck',''])
+            p_pattern = Pattern.objects.get(id = request.POST['pattern',''])
+            p_size_guide = request.FILES['size_guide']
+        elif  p_category.category_name == "pant":
+            p_fit = Fit.objects.get(id = request.POST['fittype'])
+            p_size_guide = request.FILES['size_guide']   
+            p_sleeve = None
+            p_neck = None
+            p_pattern = None 
+        else:
+            p_fit = None
+            p_sleeve = None
+            p_neck = None
+            p_pattern = None
+            p_size_guide = None
+             
         p_product = Products(
             product_name= p_name,
             description=  p_description,
             category_id = p_category,
             price= p_price,
             thumbnail =  p_image,
+            size_guide = p_size_guide,
             seller_id = seller,
             material_id = p_material,
             fit_id = p_fit,

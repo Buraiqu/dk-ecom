@@ -2,6 +2,23 @@ from django.shortcuts import render,redirect
 from home.models import Seller
 from home.models import Customer
 
+from django.http import HttpResponse
+from django.views.generic import View
+
+from .resource import CustomerResource
+
+class CSVView(View):
+    def get(self, request):
+        # Get data from the database
+        data = CustomerResource().export()
+        
+        # Create a CSV file response
+        response = HttpResponse(data.csv, content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename="mydata.csv"'
+        
+        return response
+
+
 # Create your views here.
 def index(request):
     return render(request,'admin_templates/admin_index.html')
@@ -35,7 +52,7 @@ def btn_reject_seller(request,sid):
 
 def view_user(request):
     customer = Customer.objects.all()
-    return render(request,'admin_templates/view_user.html')
+    return render(request,'admin_templates/view_user.html',{'customer':customer})
 
 def complaints(request):
     return render(request,'admin_templates/complaints.html')

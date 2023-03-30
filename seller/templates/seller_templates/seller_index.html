@@ -4,7 +4,7 @@
 {% block content %}
 <link href="{% static 'css/sb-admin-2.css' %}" rel="stylesheet">
 <link rel="stylesheet" href="{% static 'css/photo.css' %}">
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 <!-- <script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM="
     crossorigin="anonymous"></script> -->
 
@@ -13,7 +13,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
     crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+
 <style>
     .img-thumb-wrapper {
         display: inline-block;
@@ -21,20 +21,20 @@
         height: 230px;
         width: 175px;
         overflow: hidden;
-      }
+    }
 
     .img-thumb {
         height: 200px !important;
         width: 170px !important;
         object-fit: cover;
         border: 2px solid none;
-        border-radius:3px;
+        border-radius: 3px;
         padding: 1px;
         padding-left: -2px;
         cursor: pointer;
-      }
-     
-      .remove {
+    }
+
+    .remove {
         display: block;
         background: #000000;
         border: 1px solid none;
@@ -42,11 +42,12 @@
         color: white;
         text-align: center;
         cursor: pointer;
-      }
-      .remove:hover {
+    }
+
+    .remove:hover {
         background: white;
         color: black;
-      }
+    }
 </style>
 <!-- Begin Page Content -->
 <div class="container-fluid">
@@ -83,38 +84,42 @@
                             cols="5" rows="6" class="form-control border-0 small"></textarea></div>
                 </div>
 
-                <div class="row" style="display:flex;  justify-content:space-between;">
-                    <div class="col" style="display:flex; justify-content:end;"><label>Category<label></div>
-                    <div class="col" style="display:flex; justify-content:start;"><select id="registerUsername"
-                            class="form-control border-0 small" name="category">
-                            <option value="category" selected disabled>--select product
-                                category--</option>
+                <div class="row" id="category"  style="display:flex;  justify-content:space-between;">
+                    <div class="col" style="display:flex; justify-content:end;">
+                        <label for="category-select">Category<label>
+                    </div>
+                    <div class="col" style="display:flex; justify-content:start;">
+                        <select id="category-select" onselect="showHide(this)" class="form-control border-0 small" name="category">
+                            <option value="category" selected disabled>--select product category--</option>
                             {% for category in categorys %}
-                            <option value="{{category.id}}" id="'cate">
+                            <option value="{{category.id}}" id="category"  data-category-name="{{category.category_name}}">
                                 {{category.category_name}}</option>
                             {% endfor %}
                         </select> </div>
                 </div>
 
                 <div class="row" style="display:flex;  justify-content:space-between;">
-                    <div class="col" style="display:flex; justify-content:end;"><label>Materials<label></div>
-                    <div class="col" style="display:flex; justify-content:start;"><select id="registerUsername"
-                            class="form-control border-0 small" name="material">
-                            <option value="select your gender" selected disabled>--select
-                                product material--</option>
+                    <div class="col" style="display:flex; justify-content:end;">
+                        <label>Materials<label>
+                    </div>
+                    <div class="col" style="display:flex; justify-content:start;">
+                        <select id="registerUsername" class="form-control border-0 small" name="material">
+                            <option value="select your gender" selected disabled>--select product material--</option>
                             {% for material in materials %}
                             <option value="{{material.id}}">{{material.material}}</option>
                             {% endfor %}
                             <option value="synthetic">Synthetic</option>
-                        </select> </div>
+                        </select> 
+                    </div>
                 </div>
 
-                <div class="row" style="display:flex;  justify-content:space-between;">
-                    <div class="col" style="display:flex; justify-content:end;"><label>Fit Type<label></div>
-                    <div class="col" style="display:flex; justify-content:start;"><select id="registerUsername"
-                            class="form-control border-0 small" name="fittype">
-                            <option value="select your gender" selected disabled>--select
-                                product fit type--</option>
+                <div class="row" id="fit-type" style="display:none; justify-content:space-between;">
+                    <div class="col" style="display:flex; justify-content:end;">
+                        <label for="fit-type-select">Fit Type<label>
+                    </div>
+                    <div class="col" style="display:flex; justify-content:start;">
+                        <select id="fit-type-select" class="form-control border-0 small" name="fittype" >
+                            <option value="select your gender" selected disabled>--select product fit type--</option>
                             {% for fit in fits %}
                             <option value="{{fit.id}}">{{fit.fit_type}}</option>
                             {% endfor %}
@@ -122,53 +127,70 @@
                     </div>
                 </div>
 
-                <div class="row" style="display:flex;  justify-content:space-between;">
-                    <div class="col" style="display:flex; justify-content:end;"><label>Sleeve Type<label></div>
-                    <div class="col" style="display:flex; justify-content:start;"><select id="registerUsername"
-                            class="form-control border-0 small" name="sleeve">
-                            <option value="select your gender" selected disabled>--select
-                                product sleeve type--</option>
+                <div class="row" id="sleeve-type" style="display:none; justify-content:space-between;">
+                    <div class="col" style="display:flex; justify-content:end;">
+                        <label for="sleeve-type-select">Sleeve Type<label>
+                    </div>
+                    <div class="col" style="display:flex; justify-content:start;">
+                        <select id="sleeve-type-select" class="form-control border-0 small" name="sleeve" >
+                            <option value="select your gender" selected disabled>--select product sleeve type--</option>
                             {% for sleeve in sleeves %}
                             <option value="{{sleeve.id}}">{{sleeve.sleeve_type}}</option>
                             {% endfor %}
                         </select> </div>
                 </div>
 
-                <div class="row" style="display:flex;  justify-content:space-between;">
-                    <div class="col" style="display:flex; justify-content:end;"><label>Neck Type<label></div>
-                    <div class="col" style="display:flex; justify-content:start;"><select id="registerUsername"
-                            class="form-control border-0 small" name="neck">
-                            <option value="select your gender" selected disabled>--select
-                                product neck type--</option>
+                <div class="row" id="neck-type" style="display:none; justify-content:space-between;">
+                    <div class="col" style="display:flex; justify-content:end;">
+                        <label for="neck-type-select">Neck Type<label>
+                    </div>
+                    <div class="col" style="display:flex; justify-content:start;">
+                        <select id="neck-type-select" class="form-control border-0 small" name="neck" >
+                            <option value="select your gender" selected disabled>--select product neck type--</option>
                             {% for neck in necks %}
                             <option value="{{neck.id}}">{{neck.neck_type}}</option>
                             {% endfor %}
-                        </select> </div>
+                        </select> 
+                    </div>
                 </div>
 
-                <div class="row" style="display:flex;  justify-content:space-between;">
-                    <div class="col" style="display:flex; justify-content:end;"><label>Pattern Type<label></div>
-                    <div class="col" style="display:flex; justify-content:start;"><select id="registerUsername"
-                            class="form-control border-0 small" name="pattern">
-                            <option value="select your gender" selected disabled>--select
-                                product pattern--</option>
+                <div class="row" id="pattern-type" style="display:none; justify-content:space-between;">
+                    <div class="col" style="display:flex; justify-content:end;">
+                        <label for="pattern-type-select">Pattern Type<label>
+                    </div>
+                    <div class="col" style="display:flex; justify-content:start;">
+                        <select id="pattern-type-select" value="" class="form-control border-0 small" name="pattern" >
+                            <option value="select your gender" selected disabled>--select product pattern--</option>
                             {% for pattern in patterns %}
                             <option value="{{pattern.id}}">{{pattern.pattern}}</option>
                             {% endfor %}
-                        </select> </div>
-                </div>
-
-                <div class="row" style="display:flex;  justify-content:space-between;">
-                    <div class="col" style="display:flex; justify-content:end;"><label>Product Price</label></div>
-                    <div class="col" style="display:flex; justify-content:start;"><input type="text" name="price"
-                            class="form-control border-0 small">
+                        </select> 
                     </div>
                 </div>
 
                 <div class="row" style="display:flex;  justify-content:space-between;">
-                    <div class="col" style="display:flex; justify-content:end;"><label>Product thumbnail<label></div>
-                    <div class="col" style="display:flex; justify-content:start;"><input type="file" name="pic"
-                            class="form-control border-0 small">
+                    <div class="col" style="display:flex; justify-content:end;">
+                        <label>Product Price</label>
+                    </div>
+                    <div class="col" style="display:flex; justify-content:start;">
+                        <input type="text" name="price" class="form-control border-0 small">
+                    </div>
+                </div>
+
+                <div class="row" style="display:flex;  justify-content:space-between;">
+                    <div class="col" style="display:flex; justify-content:end;">
+                        <label>Product thumbnail<label>
+                    </div>
+                    <div class="col" style="display:flex; justify-content:start;">
+                        <input type="file" name="pic" class="form-control border-0 small">
+                    </div>
+                </div>
+                <div class="row" id="size-guide" style="display:none; justify-content:space-between;">
+                    <div class="col" style="display:flex; justify-content:end;">
+                        <label>Size Guide<label>
+                    </div>
+                    <div class="col" style="display:flex; justify-content:start;">
+                        <input type="file" name="size_guide"class="form-control border-0 small">
                     </div>
                 </div>
                 <div class="row" style="display: flex; justify-content: center;">
@@ -179,15 +201,16 @@
                         <input type="File" id="files" name="files[]" multiple class="form-control">
                     </div>
                 </div>
-                <div class="row" name="album"> 
+                <div class="row" name="album">
                     <div id="albumrow"></div>
                 </div>
 
                 <div class="row" style="display:flex;  justify-content:center;">
                     <td colspan="2"><button type="submit" class="btn btn-primary">submit</button>
                 </div>
+            </form>
         </div>
-        </form>
+        
     </div>
 
 
@@ -197,12 +220,38 @@
 <!-- Content Row -->
 
 
+
+  <script>
+    $("#category-select").on("change", function() {
+        const selectedOption = $(this).find("option:selected");
+        const selectedCategoryName = selectedOption.data("category-name");
+        console.log(selectedCategoryName); // This will log the selected category name to the console
+        if (selectedCategoryName == "accessories") {
+            $("#fit-type, #sleeve-type, #neck-type, #pattern-type, #size-guide").hide();
+          } 
+          else if (selectedCategoryName == "hat") {
+            $("#fit-type, #sleeve-type, #neck-type, #pattern-type, #size-guide").hide();
+          }
+          else if (selectedCategoryName == "pant") {
+            $("#sleeve-type, #pattern-type, #neck-type").hide();
+            $("#fit-type, #size-guide").show();
+          } 
+          else {
+            // reset all fields to default
+            $("#fit-type, #sleeve-type, #neck-type, #size-guide, #pattern-type").show();
+          }
+        
+      });
+  </script>
+
+
+
 <script>
 
     $(document).ready(function () {
         if (window.File && window.FileList && window.FileReader) {
             $("#files").on("change", function (e) {
-                var files = e.target.files,filesLength = files.length;
+                var files = e.target.files, filesLength = files.length;
                 for (var i = 0; i < filesLength; i++) {
                     var f = files[i]
                     var fileReader = new FileReader();

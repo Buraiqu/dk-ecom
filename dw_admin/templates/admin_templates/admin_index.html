@@ -210,64 +210,7 @@
                                 <!-- Card Header - Dropdown -->
                                 <div class="card-header py-3 align-items-center justify-content-between">
                                     <h6 class="m-0 font-weight-bold text-primary">Add Products</h6>
-                                    <form method="POST" action="" enctype="multipart/form-data">
-                                        {% csrf_token %}
-                                        <br>
-                                        <table>
-                                            <tr>
-                                                <td><label>Product name<label></td>
-                                                <td><input type="text" name="productname"
-                                                        class="form-control border-0 small"></td>
-                                            </tr>
-                                            <tr>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <td><label>Description</label></td>
-                                                <td><textarea name="description" id="" cols="5" rows="6"
-                                                        class="form-control border-0 small"></textarea></td>
-                                            </tr>
-                                            <tr>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <td><label>Category<label></td>
-                                                <td><input type="text" name="category"
-                                                        class="form-control border-0 small"></td>
-                                            </tr>
-                                            <tr>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <td><label>Product stock</label></td>
-                                                <td><input type="number" name="stock"
-                                                        class="form-control border-0 small"></td>
-                                            </tr>
-                                            <tr>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <td><label>Product Price</label></td>
-                                                <td><input type="text" name="price" class="form-control border-0 small">
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <td><label>Product Image<label></td>
-                                                <td><input type="file" name="pic" class="form-control border-0 small">
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td></td>
-                                            </tr>
-                                            <tr align="center">
-                                                <td colspan="2"><button type="submit"
-                                                        class="btn btn-primary">submit</button></td>
-                                            </tr>
-                                        </table>
-                                    </form>
+                                    <a href="{% url 'dwadmin:csv' %}">Download CSV</a>
                                 </div>
 
                             </div>

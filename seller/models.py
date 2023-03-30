@@ -1,24 +1,26 @@
 from django.db import models
 from unittest.util import _MAX_LENGTH
 from home.models import Seller
+from home.models import Customer
 
 # Create your models here.
 class Products(models.Model):
     product_name = models.CharField(max_length=60)
     description = models.CharField(max_length=300)
     thumbnail = models.ImageField(upload_to='products/')
+    size_guide = models.ImageField(upload_to='products/',null=True,blank=True)
     material_id = models.ForeignKey("Material", on_delete=models.CASCADE) 
     category_id = models.ForeignKey("Category", on_delete=models.CASCADE)
-    fit_id = models.ForeignKey("Fit", on_delete=models.CASCADE) 
-    pattern_id = models.ForeignKey("Pattern", on_delete=models.CASCADE)
-    sleeve_id = models.ForeignKey("Sleeve", on_delete=models.CASCADE)
-    neck_id = models.ForeignKey("Neck", on_delete=models.CASCADE)  
+    fit_id = models.ForeignKey("Fit",on_delete=models.CASCADE,null=True,blank=True) 
+    pattern_id = models.ForeignKey("Pattern",on_delete=models.CASCADE,null=True,blank=True)
+    sleeve_id = models.ForeignKey("Sleeve",on_delete=models.CASCADE, null=True, blank=True)
+    neck_id = models.ForeignKey("Neck",on_delete=models.CASCADE,null=True, blank=True)  
     price = models.BigIntegerField()
     seller_id = models.ForeignKey("home.Seller",on_delete=models.CASCADE,null=True)
     
 class Album(models.Model):
-      image =models.ImageField(upload_to='products/')
-      product = models.ForeignKey("Products",on_delete=models.CASCADE)
+    image =models.ImageField(upload_to='products/')
+    product = models.ForeignKey("Products",on_delete=models.CASCADE)
     
 class Category(models.Model):
     category_name = models.CharField(max_length=80)    

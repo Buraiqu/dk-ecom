@@ -1,5 +1,7 @@
 from django.urls import path
 from . import views
+from .views import CSVView
+
 app_name='dwadmin'
 urlpatterns = [
     path('',views.index, name = 'index'),
@@ -8,5 +10,7 @@ urlpatterns = [
     path('btn_approve_seller/<int:sid>',views.btn_approve_seller,name='btn_approve_seller'),
     path('btn_reject_seller/<int:sid>',views.btn_reject_seller,name='btn_reject_seller'),
     path('view_user',views.view_user,name= 'view_user'),
-    path('complaints',views.complaints,name= 'complaints')
+    path('complaints',views.complaints,name= 'complaints'),
+    path('csv/', CSVView.as_view(), name='csv'),
+     # ... other URL patterns ...
 ]

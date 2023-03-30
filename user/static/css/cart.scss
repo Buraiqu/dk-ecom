@@ -81,11 +81,17 @@ label {
   }
 }
 
+.cart-item{
+  background-color: #aaa !important;
+}
 
 /* Product entries */
-.product {
-  margin-bottom: 20px;
+.product{
+  margin-bottom: 40px;
   padding-bottom: 10px;
+  border-radius: 5px;
+  background-color: #aaa;
+  box-shadow: #aaa 5px 5px 8px;
   border-bottom: 1px solid $color-border;
   
   .product-image {
