@@ -2,6 +2,7 @@ from django.shortcuts import render,redirect
 from home.models import *
 from seller.models import *
 from user.models import *
+from home.models import *
 import pprint
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
@@ -15,13 +16,54 @@ from .models import Cart
 
 
 # Create your views here.
+# def profile(request):
+#     return render(request,'user_templates/profile.html',{'customer':customer})
+
+def personal_details(request):
+    customer = Customer.objects.get(id = request.session['customer'])
+    return render(request,'user_templates/profile-personal-details.html',{'customer':customer})
+
+def edit_personal_details(request):
+    customer = Customer.objects.get(id=request.session['customer'])
+    if request.method == 'POST':
+        customer.name = request.POST['name']
+        customer.email = request.POST['email']
+        customer.phone = request.POST['phone']
+        customer.dob = request.POST['dob']
+        customer.save()
+        return redirect('user:personal_details')
+    return render(request,'user_templates/profile-edit-personal-details.html',{'customer':customer})
+
+def manage_address(request):
+    customer = Customer.objects.get(id = request.session['customer'])
+    return render(request,'user_templates/profile-manage-address.html',{'customer':customer})
+
+def edit_manage_address(request):
+    customer = Customer.objects.get(id=request.session['customer'])
+    if request.method == 'POST':
+        customer.house = request.POST['house']
+        customer.street = request.POST['street']
+        customer.city = request.POST['city']
+        customer.pincode = request.POST['pincode']
+        customer.save()
+        return redirect('user:manage_address')
+    return render(request,'user_templates/profile-edit-manage-address.html',{'customer':customer})
+
+def my_coupons(request):
+    customer = Customer.objects.get(id = request.session['customer'])
+    return render(request,'user_templates/profile-coupon.html',{'customer':customer})
+
+def my_reviews(request):
+    customer = Customer.objects.get(id = request.session['customer'])
+    return render(request,'user_templates/profile-my-reviews.html',{'customer':customer})
+
 def user(request):
     customer_details = Customer.objects.get(id = request.session['customer'])
     return render(request,'user_templates/user_index.html')
 
 def user_jacket(request):
     category = Category.objects.get(category_name = 'jacket')
-    jacket = Products.objects.filter(category_id = category)
+    jacket = Products.objects.filter(category_id = category,status = 'approved')
     
     pprint.pprint(jacket)
     return render(request,'user_templates/jacket.html',{'jackets':jacket})
@@ -29,26 +71,32 @@ def user_jacket(request):
 
 def user_hoodie(request):
     category = Category.objects.get(category_name = 'hoodie')
-    hoodie = Products.objects.filter(category_id = category)
+    hoodie = Products.objects.filter(category_id = category,status = 'approved')
     return render(request,'user_templates/hoodie.html',{'hoodies':hoodie})
 
 def user_sweater(request):
-    return render(request,'user_templates/sweaters.html')
+    category = Category.objects.get(category_name = 'sweatshirt')
+    sweater = Products.objects.filter(category_id = category,status = 'approved')
+    return render(request,'user_templates/sweaters.html',{'sweaters':sweater})
 
 def user_tshirt(request):
-    return render(request,'user_templates/t-shirt.html')
+    category = Category.objects.get(category_name = 't-shirt')
+    tshirt = Products.objects.filter(category_id = category,status = 'approved')
+    return render(request,'user_templates/t-shirt.html',{'tshirts':tshirt})
 
 def user_pant(request):
     category = Category.objects.get(category_name = 'pant')
-    pant = Products.objects.filter(category_id = category)
+    pant = Products.objects.filter(category_id = category,status = 'approved')
     return render(request,'user_templates/pants.html',{'pants':pant})
 
 def user_hats(request):
-    return render(request,'user_templates/hats.html')                 
+    category = Category.objects.get(category_name = 'hat')
+    hat = Products.objects.filter(category_id = category,status = 'approved')
+    return render(request,'user_templates/hats.html',{'hats':hat})                 
 
 def user_accessories(request):
     category = Category.objects.get(category_name = 'accessories')
-    accessory = Products.objects.filter(category_id = category)
+    accessory = Products.objects.filter(category_id = category,status = 'approved')
     return render(request,'user_templates/accessories.html',{'accessories':accessory}) 
 
 def user_product_details(request, p_id):

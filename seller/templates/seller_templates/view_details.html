@@ -1,0 +1,183 @@
+{% extends 'seller_templates/index.html' %} {% load static %} {% block content %}
+<link href="{% static 'css/sb-admin-2.css' %}" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>  
+
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+
+
+<link rel="stylesheet" href="{% static 'css/view.css' %}" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+
+<link rel="stylesheet" href="{% static 'css/productdetails.css' %}">
+<script src="https://code.jquery.com/jquery-3.6.4.js" integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E=" crossorigin="anonymous"></script>
+<!-- Page Heading -->
+    <div class="row mb-4">
+        <div class="col-lg-10 justify-content-start"><h1 class="h3 mb-0 text-gray-800">User View</h1></div>
+        <div class="col-lg-2 justify-content-end">
+            <a href="{% url 'seller:viewproducts' %}"><span class="material-symbols-outlined">close</span></a>
+        </div>
+    </div>
+
+
+<!-----------------------------------------------------product details-------------------------------------------------->
+<form method="POST">
+{% csrf_token %}
+  <div class="row d-flex justify-content-center">
+      <div class="col-md-10">
+              <div class="product-detail row g-2">
+                  <div class="col-md-6 justify-content-end" >
+
+                      <div class="images">
+                          <div class="thumbnail  justify-content-center"> 
+                              <img id="main-image" src="{{product.thumbnail.url}}" class="img-fluid thumbnail-img"> 
+                          </div>
+                          <div class="Album"> 
+                            <img onclick="change_image(this)" src="{{product.thumbnail.url}}" width="70" height="70">
+                            {% for album in albums %}
+                            <img onclick="change_image(this)" src="{{album.image.url}}" width="70" height="70">
+                            {% endfor %}
+                          </div>
+                      </div>
+                  </div>
+                  <div class="col-md-6 details">
+                      <div class="product ps-4">
+                          <div class="mt-4 mb-1"><span id="category" value="{{product.category_id.category_name}}"></span> <span class="text-uppercase text-muted brand">{{product.seller_id.name}}</span>
+                              <h5 class="text-uppercase">{{product.product_name}}</h5>
+                              <div class="price d-flex flex-row align-items-center"> <h4 class="act-price">${{product.price}}</h4>
+                                  
+                              </div>
+                          </div>
+                          <div class="descr"><p class="about" align="justify">{{product.description}} </p></div>
+                          <p class="material"><b>Material: </b>{{product.material_id.material}}</p>
+                          {% if product.category_id.category_name != 'accessories' or 'hat' %}
+                            <p class="fit"><b>Fit Type: </b>{{product.fit_id.fit_type}}</p>
+                          {% endif %}
+                          <p class="return"><img class="return" src="{% static 'images/return.png' %}"><i> Easy 30 days Return policy.</i></p>
+
+                          <div class="sizes mt-1">
+                              <label class="text-uppercase" style="font-size: medium; font-weight: 700;">Size</label> {% for variant in variants %} <label class="radio"><input id="size-{{ variant.size_id.id }}" type="radio" name="size" onclick="getquantity()" value="{{variant.size_id}}" data-size-id="{{variant.size_id.id}}" {% if forloop.first %}{% endif %}> <span>{{variant.size_id.size}}</span></label>{% endfor %}
+                              {% if product.category_id.category_name != 'accessories' or 'hat' %}
+                                <button type="button" class="btn bg-black size-guide" style="display:flex; margin-top: 10px; color:white;"  data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                  Size Guide
+                                </button>
+                              
+                              <!-- Modal -->
+                                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                  <div class="modal-dialog modal-md">
+                                    <div class="modal-content">
+                                      <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Size Guide</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                      </div>
+                                      <div class="modal-body">
+                                        <div id="accordion" class="panel-group">            
+                                          <div class="panel-body">
+                                              <div class="size-guide-tabs">
+                                                {% if show_size_guide %}
+                                                  <img src="{{product.size_guide.url}}">
+                                                {% endif %}  
+                                              </div>
+                                              <!-- size-guide-tabs -->
+                                          </div> 
+
+                                        </div>
+                                    </div>
+                                  </div>
+                                </div>   
+                                </div> 
+                                {% endif %}    
+                          </div>      
+                          <div class="qty">
+                            <label>Quantity:</label>
+                            <input type="hidden" name="variant_id" value="{{ variants.0.id }}">
+                            <input type="number" class="form-control" style="width: 60px !important;" name="quantity" value="1" min="1">
+                            <b><i id="stock" style="color: rgb(163, 7, 7);" name="stock"></i></b>
+                
+                          </div>
+                          <div id="quantity-message" class="mt-3"></div>
+                          <div class="cart mt-4 align-items-center"> <button type="submit" class="btn btn-danger text-uppercase mr-2 px-4" disabled>Add to cart</button> &nbsp;&nbsp;&nbsp;<i class="fa fa-share-alt text-muted"></i> </div>
+                      </div>
+                  </div>
+              
+          </div>
+      </div>
+  </div>
+  {{message}}
+</form> 
+
+
+<script>
+function change_image(image){
+    var container = document.getElementById("main-image");
+   container.src = image.src;
+}
+document.addEventListener("DOMContentLoaded", function(event) {
+});
+
+</script>
+
+
+<script>
+$(document).ready(function() {
+  $('input[name="size"]').on('change', function() {
+    var sizeId = $(this).attr('data-size-id');
+    var variantId = $('input[name="variant_id"][data-size-id="' + sizeId + '"]').val();
+    $('input[name="variant_id"]').val(variantId);
+  });
+});
+</script>
+
+<script>
+  function getquantity(){
+    var productId = "{{product.id}}";
+    var sizeRadio = document.querySelector('input[name="size"]:checked');
+    var sizeId = sizeRadio.getAttribute('data-size-id');
+  
+    // Send an AJAX request to your Django view
+    $.ajax({
+      url: "{% url 'user:get_quantity' %}",
+      type: 'GET',
+      data: {
+        'product_id': productId,
+        'size_id': sizeId
+      },
+      success: function(data) {
+        var availableQuantity = data.available_quantity;
+        // Update the quantity on the front-end with the response from the server
+        //alert(availableQuantity);
+        var quantityInput = document.querySelector('input[name="quantity"]');
+        quantityInput.max = availableQuantity;
+        var stocki = document.getElementById('stock').innerHTML = "Only "+ availableQuantity +" stocks available.";
+      },
+      error: function(xhr, status, error) {
+        // Handle any errors that occur during the AJAX request
+        console.error(xhr.responseText);
+      }
+    });
+  }
+</script>
+
+
+<script>
+  $(document).ready(function() {
+    var category = $('#category').attr('value').toLowerCase();
+    if (category === 'accessories' || category === 'hat') {
+      $('.fit').css('visibility', 'hidden');
+      $('.size-guide').css('visibility', 'hidden');
+    }
+  });
+</script>
+
+<script>
+$(document).ready(function(){ 
+  $(".size-guide-tabs a").click(function(e){
+    e.preventDefault();
+    $(this).tab('show');
+  });
+});
+</script>
+
+{% endblock %} 
+
+

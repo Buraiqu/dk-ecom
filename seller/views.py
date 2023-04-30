@@ -1,7 +1,8 @@
-from django.http import JsonResponse
-from django.shortcuts import render,redirect
+from django.http import Http404, HttpResponseBadRequest, JsonResponse, HttpRequest
+from django.shortcuts import get_object_or_404, render,redirect
 from .models import Category,Fit,Material,Pattern,Neck,Sleeve,Size,Variant,Products,Album
 from home.models import Seller
+from user.models import Cart
 import pprint
 import os
 from django.contrib import messages
@@ -31,16 +32,13 @@ def seller_variant(request):
     size = Size.objects.all()
     return render(request,'seller_templates/add_product_variant.html',{'products':products,'sizes':size})
 
-
 def view_variant(request,pid=0):
     variant = Variant.objects.filter(product_id = pid)
     return render(request,'seller_templates/view_variants.html',{'data':variant})
 
-
 def product_list(request):
     products = Products.objects.all().values('id', 'product_name')
     return JsonResponse(list(products), safe=False)
-
 
 def delete_product(request,pid=0):
     product = Products.objects.get(id = pid)
@@ -50,7 +48,6 @@ def delete_product(request,pid=0):
     messages.success(request,"Product deleted successfully")
     return redirect("seller:viewproducts")
     return render(request,'seller_templates/seller_view.html')
-
 
 def seller_home(request):
     sellers = Seller.objects.get(id = request.session['seller'])
@@ -72,9 +69,9 @@ def seller_home(request):
         p_material = Material.objects.get(id = request.POST['material'])
         if p_category.category_name in ["t-shirt", "jacket", "sweatshirt", "hoodie"]:
             p_fit = Fit.objects.get(id = request.POST['fittype'])
-            p_sleeve = Sleeve.objects.get(id = request.POST['sleeve',''])
-            p_neck = Neck.objects.get(id = request.POST['neck',''])
-            p_pattern = Pattern.objects.get(id = request.POST['pattern',''])
+            p_sleeve = Sleeve.objects.get(id = request.POST['sleeve'])
+            p_neck = Neck.objects.get(id = request.POST['neck'])
+            p_pattern = Pattern.objects.get(id = request.POST['pattern'])
             p_size_guide = request.FILES['size_guide']
         elif  p_category.category_name == "pant":
             p_fit = Fit.objects.get(id = request.POST['fittype'])
@@ -126,11 +123,84 @@ def seller_home(request):
     }
     return render(request,'seller_templates/seller_index.html',context)
 
-
 def seller_products(request):
-    product_obj = Products.objects.filter(seller_id=request.session['seller'])
+    product_obj = Products.objects.filter(seller_id=request.session['seller'],status = 'pending')
     return render(request,'seller_templates/seller_view.html',{'data':product_obj})
 
+def btn_approve_product(request,pid):
+    product = Products.objects.filter(id = pid).update(status='approved')
+    return redirect('seller:viewproducts')
+
+def btn_reject_product(request,pid):
+    product = Products.objects.filter(id = pid,status='pending').delete()
+    return redirect('seller:viewproducts')
+
+def view_details(request,pid):
+    msg="" 
+    product = Products.objects.get(id = pid)
+    variants = Variant.objects.filter(product_id = pid)
+    print(variants)
+    album = Album.objects.filter(product_id = pid)
+    
+    show_fit_type = True
+    show_size_guide = True
+    if product.category_id.category_name in ['accessories', 'hat']:
+        show_fit_type = False
+        try:
+            context = {
+                'product': product,
+                'variants': variants,
+                'albums': album,
+                'show_fit_type': show_fit_type,
+                'show_size_guide': show_size_guide,
+                'size_guide': product.size_guide.url
+            }
+        except ValueError:
+            show_size_guide = False
+            context = {
+                'product': product,
+                'variants': variants,
+                'albums': album,
+                'show_fit_type': show_fit_type,
+                'show_size_guide': show_size_guide,
+                'size_guide': None  # default value for size_guide
+            }
+
+    else:
+        context = {
+            'product': product,
+            'variants': variants,
+            'albums': album,
+            'show_fit_type': show_fit_type,
+            'show_size_guide': show_size_guide,
+            'size_guide': product.size_guide.url
+        }
+        
+    if request.method == 'POST':
+        u_id=request.session.get('customer')
+        quantity = request.POST.get('quantity')
+        # v_id = request.POST.get('variant_id')
+        # print(v_id)
+        size = request.POST.get('size')
+        size_id = size_id = int(size.split()[2].strip("()"))
+        print(size_id)
+        variants = Variant.objects.get(product_id = product,size_id=size_id)
+        print(variants)
+        item = Cart.objects.filter(customer_id =u_id ,product_id = pid,variant_id=variants.id).exists()
+        print(item)
+        if not item:           #same as if item == false:
+            cart= Cart(customer_id =u_id,product_id = pid,variant_id=variants.id,qty = quantity)
+            cart.save()
+            return redirect('user:cart')
+
+        else:
+            print('already in cart')
+            msg = 'Item already in cart'
+    return render(request,'seller_templates/view_details.html',context)
+
+def seller_approved_products(request):
+    product_obj = Products.objects.filter(seller_id=request.session['seller'],status = 'approved')
+    return render(request,'seller_templates/seller_approved_products.html',{'data':product_obj})
     
 def seller_change_password(request):
     msg = ''
@@ -149,12 +219,52 @@ def seller_change_password(request):
 
 
 def seller_update_stock(request):
-    pro = Products.objects.filter(seller_id=request.session['seller'])
+    product = Products.objects.filter(seller_id=request.session['seller'])
     context = {
-        'product':pro
+        'product':product
     }
     return render(request,'seller_templates/stock_update.html',context)
 
+def get_product_name(request):
+    product_id = request.GET.get('product_id')
+    try:
+        product = Products.objects.get(id=product_id)
+        product_name = product.product_name
+    except Products.DoesNotExist:
+        raise Http404("Product does not exist")
+    data = {
+        'product_name': product_name,
+    }
+    return JsonResponse(data)
+
+def get_variant(request):
+    product_id = request.GET.get('product_id')
+    try:
+        variant_qs = Variant.objects.filter(product_id=product_id)
+        variant_list = list(variant_qs.values())  # Convert the queryset to a list of dictionaries
+    except Products.DoesNotExist:
+        raise Http404("Product does not exist")
+    data = {
+        'variant': variant_list,
+    }
+    return JsonResponse(data)
+
+
+
+def get_size(request: HttpRequest):
+    if request.method == 'GET' and request.is_ajax():
+        size_id = request.GET.get('size_id')
+        size = Size.objects.filter(id=size_id).first()
+        if size:
+            size_name = size.size
+            return JsonResponse({'size': size_name})
+        else:
+            return JsonResponse({'error': 'Size not found'})
+    else:
+        return HttpResponseBadRequest()
+            
+def edit_approved_products(request,pid):
+    return render(request,'seller_templates/edit_approved_products.html')            
 
 def seller_stock_up(request):
     id = request.POST['pno']

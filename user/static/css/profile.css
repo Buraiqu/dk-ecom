@@ -1,0 +1,62 @@
+.profile-pic{
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    display: flex;
+    justify-self: center;
+}
+
+a{
+    text-decoration: none;
+    font-weight: 600;
+    color: black;
+}
+
+a:hover{
+    color: rgb(182, 49, 49);
+}
+
+small{
+    color: rgb(182, 49, 49);
+    font-weight: 600;
+}
+
+.hello-customer{
+    box-shadow: 1px 2px 2px 2px rgb(190, 189, 189);
+    border-radius: 6px;
+    height: 65px;
+}
+
+.customer-h{
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+}
+
+.name{
+    font-size: 16px;
+    padding-top: 1px;
+    display: flex;
+    justify-content: center;
+}
+
+.account-settings{
+    box-shadow: 1px 2px 2px 2px rgb(190, 189, 189);
+    border-radius: 6px;
+}
+
+.my-stuff{
+    box-shadow: 1px 2px 2px 2px rgb(190, 189, 189);
+    border-radius: 6px;
+}
+
+.edit-area{
+    box-shadow: 1px 2px 2px 2px rgb(190, 189, 189);
+    border-radius: 6px;
+    width: 70%;
+}
+
+.manage-address{
+    font-size: 18px;
+    font-weight: 500;
+}

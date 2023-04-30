@@ -17,6 +17,7 @@ class Products(models.Model):
     neck_id = models.ForeignKey("Neck",on_delete=models.CASCADE,null=True, blank=True)  
     price = models.BigIntegerField()
     seller_id = models.ForeignKey("home.Seller",on_delete=models.CASCADE,null=True)
+    status = models.CharField(max_length=20,default='pending')
     
 class Album(models.Model):
     image =models.ImageField(upload_to='products/')

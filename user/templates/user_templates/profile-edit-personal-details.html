@@ -1,0 +1,30 @@
+{% extends 'user_templates/profile.html' %}{% load static %}
+
+{% block page_content %}
+  <h3>
+    Personal Details
+  </h3>
+  <form method="post" action="">
+    {% csrf_token %}
+    <div class="p-2">
+      <label>Name</label><br>
+      <input class="form" type="text" value="{{customer.name}}" name="name">
+    </div>
+    <div class="p-2">
+      <label>Email</label><br>
+      <input type="text" value="{{customer.email}}" name="email">
+    </div>
+    <div class="p-2">
+      <label>Phone</label><br>
+      <input type="number" value="{{customer.phone}}" name="phone">
+    </div>
+    <div class="p-2">
+      <label>Date of Birth</label><br>
+      <input type="date" value="{{customer.dob}}" name="dob">
+    </div>
+    <div class="p-2">
+        <button type="submit" class="btn btn-dark">Save & Submit</button>
+    </div>
+
+  </form>
+{% endblock %}

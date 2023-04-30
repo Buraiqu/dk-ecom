@@ -1,6 +1,8 @@
 
-  {% extends 'user_templates/user_master.html' %} {% load static %} {% block content %}
-  <link rel="stylesheet" href="{% static '/css/styleho.css' %}" as="style">
+{% extends 'user_templates/user_master.html' %} {% load static %} {% block content %}
+<link rel="stylesheet" href="{% static '/css/styleho.css' %}" as="style">
+<script src="{% static 'js/tinysort.min.js' %}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <!-----------------------------------------------------main1---------------------------------------------------------->
   <div id="parallax-world-of-ugg">
     <section>
@@ -18,140 +20,52 @@
           </div>
           <div class="col-lg-4 col-md-4 col-sm-4 justify-content-end text-end">
             <label class="newarrival"><b>Sort by</b></label>
-            <select name="sort" id="">
-                <option value="popular">Popular</option>
-                <option value="pl">price(lowest first)</option>
-                <option value="ph">price(highest first)</option>
-                <option value="n">Newest First</option>
+            <select name="sort" id="sort-by" onchange="sortProducts()">
+              <option disabled selected>--sort--</option>
+              <option value="pl">price(lowest first)</option>
+              <option value="ph">price(highest first)</option>
             </select>
           </div>
         </div>
         <br><br>
-        <div class="row justify-content-center">
+        <div class="row justify-content-start">
+          {% for hoodie in hoodies %}
           <div class="col-lg-3 col-md-6 col-sm-6 justify-content-center">
             <div id="product-grid">
               <div id="product-image">
-                <a href="#" id="image">
-                  <img src="{% static 'images/jacket1.jpg' %}">
+                <a href="{% url 'user:product_details' hoodie.id %}" id="image">
+                  <img src="{{hoodie.thumbnail.url}}">
                 </a>
                 <span id="product-discount-label">-23%</span>
                 <a href="" id="add-to-cart">Add to Cart</a>
               </div>
               <div id="product-content">
-                <h3 id="title"><a href="#">Jacket</a></h3>
-                <div id="price">$53.55 <span>$68.88</span></div>
+                <div id="title" style="height: 32px; cursor:pointer"><p>{{hoodie.product_name}}</p></div>
+                <div class="price"><b>${{hoodie.price}}</b></div>
               </div>
             </div>
           </div>
-          <div class="col-lg-3 col-md-6 col-sm-6 justify-content-center">
-            <div id="product-grid">
-              <div id="product-image">
-                <a href="#" id="image">
-                  <img src="{% static 'images/products-SL-Type201CrossbodySlingCatalogc2_2000x.jpg' %}">
-                </a>
-                <a href="" id="add-to-cart">Add to Cart</a>
-              </div>
-              <div id="product-content">
-                <h3 id="title"><a href="#">Crossbody Bag</a></h3>
-                <div id="price">$75.55</div>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-3 col-md-6 col-sm-6 justify-content-center">
-            <div id="product-grid">
-              <div id="product-image">
-                <a href="#" id="image">
-                  <img src="{% static 'images/cap1.jpg' %}">
-                </a>
-                <span id="product-discount-label">-23%</span>
-                <a href="" id="add-to-cart">Add to Cart</a>
-              </div>
-              <div id="product-content">
-                <h3 id="title"><a href="#">Cap</a></h3>
-                <div id="price">$53.55 <span>$68.88</span></div>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-3 col-md-6 col-sm-6 justify-content-center">
-            <div id="product-grid">
-              <div id="product-image">
-                <a href="#" id="image">
-                  <img src="{% static 'images/glove1.jpg' %}">
-                </a>
-                <a href="" id="add-to-cart">Add to Cart</a>
-              </div>
-              <div id="product-content">
-                <h3 id="title"><a href="#">Gloves</a></h3>
-                <div id="price">$75.55</div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="row justify-content-center">
-          <div class="col-lg-3 col-md-6 col-sm-6 justify-content-center">
-            <div id="product-grid">
-              <div id="product-image">
-                <a href="#" id="image">
-                  <img src="{% static 'images/tshirt1.jpg' %}">
-                </a>
-                <span id="product-discount-label">-23%</span>
-                <a href="" id="add-to-cart">Add to Cart</a>
-              </div>
-              <div id="product-content">
-                <h3 id="title"><a href="#">T-Shirt</a></h3>
-                <div id="price">$53.55 <span>$68.88</span></div>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-3 col-md-6 col-sm-6 justify-content-center">
-            <div id="product-grid">
-              <div id="product-image">
-                <a href="#" id="image">
-                  <img src="{% static 'images/cap3.jpg' %}">
-                </a>
-                <a href="" id="add-to-cart">Add to Cart</a>
-              </div>
-              <div id="product-content">
-                <h3 id="title"><a href="#">Cap</a></h3>
-                <div id="price">$75.55</div>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-3 col-md-6 col-sm-6 justify-content-center">
-            <div id="product-grid">
-              <div id="product-image">
-                <a href="#" id="image">
-                  <img src="{% static 'images/cap5.jpg' %}">
-                </a>
-                <span id="product-discount-label">-23%</span>
-                <a href="" id="add-to-cart">Add to Cart</a>
-              </div>
-              <div id="product-content">
-                <h3 id="title"><a href="#">Beanie</a></h3>
-                <div id="price">$53.55 <span>$68.88</span></div>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-3 col-md-6 col-sm-6 justify-content-center">
-            <div id="product-grid">
-              <div id="product-image">
-                <a href="#" id="image">
-                  <img src="{% static 'images/hoodie7.jpg' %}">
-                </a>
-                <a href="" id="add-to-cart">Add to Cart</a>
-              </div>
-              <div id="product-content">
-                <h3 id="title"><a href="#">Hoodie</a></h3>
-                <div id="price">$75.55</div>
-              </div>
-            </div>
-          </div>
+          {% endfor %}
         </div>
       </div>
-
-    </section>   
+      <div id="product-list"></div>
+  
+    </section>
+  
+  </div>
+  
+  <script>
+    function sortProducts() {
+      // Get the sort value selected by the user
+      var sortValue = $('#sort-by').val();
       
-    </div>
+      // Use TinySort to sort the products based on their price
+      tinysort('#product-grid', { 
+        selector: '.price', 
+        order: sortValue === 'pl' ? 'asc' : 'desc' 
+      });
+    }
+  </script>
 
 {% endblock%}
  

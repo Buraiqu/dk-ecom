@@ -1,0 +1,173 @@
+
+
+.card {
+    border: none
+}
+
+.product {
+    background-color: rgb(240, 240, 245);
+    height: 555px;
+    width: 500px;
+}
+
+.product-detail>:nth-child(1){
+    display: flex;justify-content: start;
+
+}
+
+
+
+.brand {
+    font-size: 13px
+}
+
+.act-price {
+    color: rgb(182, 49, 49);
+    font-weight: 700
+}
+
+.dis-price {
+    text-decoration: line-through
+}
+
+.descr{
+    padding-top: 2px;
+    height: 9%;
+    width: 97%;
+}
+
+.about {
+    font-size: 12px;
+    padding-top:0px;
+}
+
+.color {
+    margin-bottom: 10px
+}
+
+label.radio {
+    cursor: pointer
+}
+
+label.radio input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    visibility: hidden;
+    pointer-events: none
+}
+
+label.radio span {
+    padding: 2px 9px;
+    border: 2px solid #b92c2c;
+    display: inline-block;
+    color: #b92c2c;
+    border-radius: 3px;
+    text-transform: uppercase
+}
+
+label.radio input:checked+span {
+    border-color: #b92c2c;
+    background-color: #b92c2c;
+    color: #fff
+}
+
+.btn-danger {
+    background-color: #b92c2c !important;
+    border-color: #b92c2c !important
+}
+
+.btn-danger:hover {
+    background-color: #b92c2c !important;
+    border-color: #b92c2c !important
+}
+
+.btn-danger:focus {
+    box-shadow: none
+}
+
+.cart i {
+    margin-right: 10px
+}
+
+
+.qty{
+    margin: 20px 0;
+    display: flex;
+    align-items: center;
+}
+
+.images{
+    height: 550px;
+    width: 500px;
+    /* border:3px solid black !important; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.thumbnail{
+    height: 500px;
+    width: 400px;
+    display: flex;
+    justify-content: center;
+    align-items: center ;
+}
+
+.thumbnail-img{
+    max-height: 400px;
+}
+
+.details{
+    display: flex;
+    flex-direction: column;
+}
+
+.policies{
+    display: flex;
+    width: 90%;
+}
+
+.return{
+    height: 40px;
+}
+
+
+
+@media only screen and (max-width:450px){
+    .product-detail{
+        display: flex;
+        flex-direction: column;
+        /* gap: 10px; */
+        padding-top: 5px;
+        align-items:center ;
+    }
+
+    .product {
+        background-color: rgb(240, 240, 245);
+        height: 550px;
+        width: 350px;
+    }
+
+    .images{
+        height: 400px;
+        width: 350px;
+        /* border:3px solid black !important; */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding-bottom: 10px;
+    }
+    .thumbnail{
+        height: 350px;
+        width: 220px;
+        display: flex;
+        justify-content: center;
+        align-items: center ;
+    }
+    
+    .thumbnail-img{
+        max-height: 400px;
+    }
+}

@@ -45,9 +45,9 @@
                   </span> -->
                 </a>
                 <ul class="dropdown-menu">
-                  <li><a class="dropdown-item btn btn-primary" href="#">Edit</a></li>
-                  <li><a class="dropdown-item btn btn-primary" href="view_variant/{{i.id}}">View Variants</a></li>
-                  <li><a class="dropdown-item btn btn-danger" href="delete_product/{{i.id}}">Delete</a></li>
+                  <li><a class="dropdown-item btn btn-primary" href="{% url 'seller:view_details' i.id %}">View Details</a></li>
+                  <li><a class="dropdown-item btn btn-primary" href="btn_approve_product/{{i.id}}">Approve</a></li>
+                  <li><a class="dropdown-item btn btn-danger" href="btn_reject_product/{{i.id}}">Reject</a></li>
                 </ul>
               </li>
             </div>
